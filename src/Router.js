@@ -1,18 +1,16 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import SingleIssue from './SingleIssue';
-import App from './App';
-import NotFound from './NotFound';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import SingleIssue from "./SingleIssue";
+import App from "./App";
+import NotFound from "./NotFound";
 
 const Router = () => (
-
-    <BrowserRouter>
+  <BrowserRouter>
     <Switch>
-        <Route exact path="/" component={App}/>
-        <Route path="/issue/:IssueId" component={SingleIssue}/>
-        <Route component={NotFound}/>
+      <Route exact path="/" component={App} />
+      <Route path="/issue/:IssueId" component={SingleIssue} />
+      <Route component={NotFound} />
     </Switch>
-    </BrowserRouter>
-) 
+  </BrowserRouter>
+);
 export default Router;
-

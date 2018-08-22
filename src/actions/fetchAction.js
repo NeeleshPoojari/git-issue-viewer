@@ -21,9 +21,10 @@ export const receive_error = () => {
 
 export const thunk_action_creator = (username,repo) => {
   const user = username.replace(/\s/g, "");
+  const rep = repo.replace(/\s/g, "");
   store.dispatch(fetch_post());
   return function(dispatch, getState) {
-    return fetch(`https://api.github.com/repos/${user}/${repo}/issues`)
+    return fetch(`https://api.github.com/repos/${user}/${rep}/issues`)
       .then(data => data.json())
       .then(data => {
         if (data.message === "Not Found") {
