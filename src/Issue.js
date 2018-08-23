@@ -7,15 +7,11 @@ class Issue extends React.Component {
   render() {
     return (
       <div>
-        <p>
-          <span>
+        <a href={'/issue/' + this.props.issue.number}>
             <strong>{this.props.i + 1}.</strong>
-          </span>
-          &nbsp;&nbsp;&nbsp;
-          {this.props.issue.body}
-        </p>
-        <button>Select</button>
-        <br />
+          {this.props.issue.title}
+        </a>
+        <br/> <br/>
        
       </div>
     );
