@@ -109,3 +109,7 @@ a.issue-title {
 div.activity {
   margin-left: 30px;
 }
+div.pagination {
+  justify-content: center;
+  padding-bottom: 20px;
+}
