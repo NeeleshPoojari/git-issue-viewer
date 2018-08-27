@@ -85,3 +85,27 @@ img {
   border-radius: 50%;
   border: 2px solid #141414;
 }
+
+a {
+  color: black;
+
+}
+
+a:hover {
+  text-decoration: none;
+}
+a:hover span {
+  color: black;
+}
+
+span.comments {
+  position: absolute;
+  right: 35px;
+}
+
+a.issue-title {
+  margin-left: 17px;
+}
+div.activity {
+  margin-left: 30px;
+}

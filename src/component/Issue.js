@@ -1,21 +1,25 @@
 import React from "react";
 
-
 class Issue extends React.Component {
-  
-  
   render() {
+   let { issue } = this.props;
     return (
-      <div>
-        <a href={'/issue/' + this.props.issue.number}>
-            <strong>{this.props.i + 1}.</strong>
-          {this.props.issue.title}
-
-        <h4>  comment     {this.props.issue.comments}</h4>
-        </a>
-        <br/> <br/>
-       
-      </div>
+      <tr>
+        <td className="table-light">
+        <span className="	fa fa-exclamation-circle issue-status-icon"></span>
+          <a  className="issue-title" href={"/issue/" + issue.number}>
+            {issue.title}
+            <div className="activity">
+              <span className="issue-no">#{issue.number}</span>&nbsp;
+              <span className="issue-status">{issue.state}ed on</span>&nbsp;
+              <span className="open-on">{issue.created_at} by </span>
+              <span className="creator">{issue.user.login}</span>&nbsp;
+              <span className="updated-on"> Updated on {issue.updated_at} </span>&nbsp;
+              <span className="fa fa-comment-o comments" > &nbsp;{issue.comments}</span>
+            </div>
+          </a>
+        </td>
+      </tr>
     );
   }
 }

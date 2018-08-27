@@ -70,12 +70,12 @@ class App extends Component {
           <NoIssue />
         )}
         {Object.keys(this.props.data.issues.userData).length > 0 ? (
-          <div className="center">
+          <div className="">
             <div className="pagination">
-              <button onClick={this.changePage.bind(this)} id="prev">
+              <button className="btn btn-success" onClick={this.changePage.bind(this)} id="prev">
                 &laquo;
               </button>
-              <button onClick={this.changePage.bind(this)} id="next">
+              <button className="btn btn-primary" onClick={this.changePage.bind(this)} id="next">
                 &raquo;
               </button>
             </div>
