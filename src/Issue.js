@@ -11,7 +11,7 @@ class Issue extends React.Component {
             <strong>{this.props.i + 1}.</strong>
           {this.props.issue.title}
 
-        <h2>  comment     {this.props.issue.comments}</h2>
+        <h4>  comment     {this.props.issue.comments}</h4>
         </a>
         <br/> <br/>
        
