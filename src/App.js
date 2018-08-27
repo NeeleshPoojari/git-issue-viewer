@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import IssueList from "./IssueList";
-import { thunk_action_creator } from "./actions/fetchAction";
+import { thunk_action_creator_issues} from "./actions/fetchAction";
 
 class App extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const username = this.getUsername.value;
     const repo = this.getRepo.value;
-    this.props.dispatch(thunk_action_creator(username,repo));
+    let userInfo = {
+      name:username,
+      repo:repo
+    };
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    this.props.dispatch(thunk_action_creator_issues(username,repo));
     this.getUsername.value = "";
     this.getRepo.value = "";
   };
@@ -33,12 +38,12 @@ class App extends Component {
           />
           <button className="button">Submit</button>
         </form>
-        {this.props.data.isFetching ? <h3>Loading...</h3> : null}
-        {this.props.data.isError ? (
+        {this.props.data.issues.isFetching ? <h3>Loading...</h3> : null}
+        {this.props.data.issues.isError ? (
           <h3 className="error">No such User or Repo exists.</h3>
         ) : null}
-        {Object.keys(this.props.data.userData).length > 0 ? (
-          <IssueList user={this.props.data.userData} />
+        {Object.keys(this.props.data.issues.userData).length > 0 ? (
+          <IssueList user={this.props.data.issues.userData} />
         ) : null}
       </div>
     );

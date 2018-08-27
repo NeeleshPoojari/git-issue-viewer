@@ -19,7 +19,7 @@ export const receive_error = () => {
   };
 };
 
-export const thunk_action_creator = (username,repo) => {
+export const thunk_action_creator_issues = (username,repo) => {
   const user = username.replace(/\s/g, "");
   const rep = repo.replace(/\s/g, "");
   store.dispatch(fetch_post());
@@ -30,6 +30,51 @@ export const thunk_action_creator = (username,repo) => {
         if (data.message === "Not Found") {
           throw new Error("No such user found!!");
         } else dispatch(receive_post(data));
+      })
+      .catch(err => dispatch(receive_error()));
+  };
+};
+export const thunk_action_creator_specific_issue = (username,repo,issueId) => {
+  const user = username.replace(/\s/g, "");
+  const rep = repo.replace(/\s/g, "");
+  store.dispatch(fetch_post());
+  return function(dispatch, getState) {
+    return fetch(`https://api.github.com/repos/${user}/${rep}/issues/${issueId}`)
+      .then(data => data.json())
+      .then(data => {
+        if (data.message === "Not Found") {
+          throw new Error("No such user found!!");
+        } else dispatch(receive_post(data));
+      })
+      .catch(err => dispatch(receive_error()));
+  };
+};
+
+export const fetch_comment = () => {
+  return {
+    type: "FETCH_COMMENT"
+  };
+};
+
+export const receive_comment = post => {
+  return {
+    type: "FETCHED_COMMENT",
+    data: post
+  };
+};
+
+
+export const thunk_action_creator_comment = (username,repo,issueId) => {
+  const user = username.replace(/\s/g, "");
+  const rep = repo.replace(/\s/g, "");
+  store.dispatch(fetch_comment());
+  return function(dispatch, getState) {
+    return fetch(`https://api.github.com/repos/${user}/${rep}/issues/${issueId}/comments`)
+      .then(data => data.json())
+      .then(data => {
+        if (data.message === "Not Found") {
+          throw new Error("No such user found!!");
+        } else dispatch(receive_comment(data));
       })
       .catch(err => dispatch(receive_error()));
   };
