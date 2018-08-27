@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import SingleIssue from "./SingleIssue";
+import SingleIssue from "./component/SingleIssue";
 import App from "./App";
-import NotFound from "./NotFound";
+import NotFound from "./component/NotFound";
 
 const Router = () => (
   <BrowserRouter>

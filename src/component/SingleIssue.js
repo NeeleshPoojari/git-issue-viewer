@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {thunk_action_creator_specific_issue, thunk_action_creator_comment } from "./actions/fetchAction";
+import {thunk_action_creator_specific_issue, thunk_action_creator_comment } from "../actions/fetchAction";
 import Comment from './Comment';
 
 class SingleIssue extends React.Component {

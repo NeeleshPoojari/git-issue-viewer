@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import IssueList from "./IssueList";
+import IssueList from "./component/IssueList";
+import NoIssue from "./component/NoIssue";
+
+
 import { thunk_action_creator_issues } from "./actions/fetchAction";
 
 class App extends Component {
-  
   handleSubmit = e => {
     e.preventDefault();
     const username = this.getUsername.value;
@@ -20,18 +22,18 @@ class App extends Component {
     this.getRepo.value = "";
   };
   changePage(e) {
-    var user = JSON.parse(localStorage.getItem('userInfo'));
-     let  { name, repo ,pageNum } = user;
+    var user = JSON.parse(localStorage.getItem("userInfo"));
+    let { name, repo, pageNum } = user;
     e.currentTarget.id === "next"
-      ? pageNum++
+      ? ++pageNum
       : pageNum > 1
         ? --pageNum
         : pageNum;
 
-        user.pageNum = pageNum;
-        localStorage.setItem("userInfo", JSON.stringify(user));
+    user.pageNum = pageNum;
+    localStorage.setItem("userInfo", JSON.stringify(user));
 
-        console.log(pageNum);
+    console.log(pageNum);
 
     console.log("Changing page");
     this.props.dispatch(thunk_action_creator_issues(name, repo, pageNum));
@@ -64,18 +66,21 @@ class App extends Component {
         ) : null}
         {Object.keys(this.props.data.issues.userData).length > 0 ? (
           <IssueList user={this.props.data.issues.userData} />
-        ) : null}
+        ) : this.props.data.issues.isFetching ? null : (
+          <NoIssue />
+        )}
         {Object.keys(this.props.data.issues.userData).length > 0 ? (
-        <div className="center">
-          <div className="pagination">
-            <button onClick={this.changePage.bind(this)} id="prev">
-              &laquo;
-            </button>
-            <button onClick={this.changePage.bind(this)} id="next">
-              &raquo;
-            </button>
+          <div className="center">
+            <div className="pagination">
+              <button onClick={this.changePage.bind(this)} id="prev">
+                &laquo;
+              </button>
+              <button onClick={this.changePage.bind(this)} id="next">
+                &raquo;
+              </button>
+            </div>
           </div>
-        </div>):null}
+        ) : null}
       </div>
     );
   }
