@@ -8,7 +8,8 @@ const IssueList = props => {
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>issues</th>
+            <th>Issues 49
+            </th>
           </tr>
         </thead>
         <tbody>
