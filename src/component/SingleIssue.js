@@ -39,14 +39,16 @@ class SingleIssue extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(this.props.comments.comments).map((key, i) => (
+
+            {Object.keys(this.props.comments.comments).length > 0 ? 
+            Object.keys(this.props.comments.comments).map((key, i) => (
               <Comment
                 {...this.props}
                 key={i}
                 i={i}
                 comment={this.props.comments.comments[key]}
               />
-            ))}
+            )) : <h3>No comments for this issue</h3>}
           </tbody>
         </table>
       </div>
