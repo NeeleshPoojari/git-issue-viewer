@@ -18,20 +18,48 @@ class SingleIssue extends React.Component {
     this.props.dispatch(thunk_action_creator_comment(name, repo, IssueId));
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(this.refs + "Add comment");
+    const author = this.refs.author.value;
+    const comment = this.refs.comment.value;
+    const { userData } = this.props.issue;
+
+    var newComment = {
+      issueId: userData.number,
+      author,
+      comment
+    };
+    localStorage.setItem(
+      `newComment${userData.number + Math.random()}`,
+      JSON.stringify(newComment)
+    );
+
+    this.refs.commentForm.reset();
+  }
+
   render() {
-    const {userData} = this.props.issue;
-    const {user} = this.props.issue.userData;
+    const { userData } = this.props.issue;
+    const { user } = this.props.issue.userData;
     return (
       <div class="Single-issue-description">
-       <h1 class="issue-title">{userData.title} <span className="issue-no">#{userData.number}</span>&nbsp;</h1>
-       <div className="activity">
-              <span className="issue-status">{userData.state}ed on</span>&nbsp;
-              <span className="open-on">{userData.created_at} by </span>
-              <span className="creator">{}</span>&nbsp;
-            </div>
-        <h2>issue description</h2>
-        {this.props.issue.userData.body}
-
+        <h1 class="issue-title">
+          {userData.title} <span className="issue-no">#{userData.number}</span>
+          &nbsp;
+        </h1>
+        <div className="activity">
+          <span className="issue-status">
+            {userData.state}
+            ed on
+          </span>
+          &nbsp;
+          <span className="open-on">{userData.created_at} </span>
+          <span className="creator">{}</span>
+          &nbsp;
+        </div>
+        <div class="description alert-success ">
+          {this.props.issue.userData.body}
+        </div>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -39,18 +67,32 @@ class SingleIssue extends React.Component {
             </tr>
           </thead>
           <tbody>
-
-            {Object.keys(this.props.comments.comments).length > 0 ? 
-            Object.keys(this.props.comments.comments).map((key, i) => (
-              <Comment
-                {...this.props}
-                key={i}
-                i={i}
-                comment={this.props.comments.comments[key]}
-              />
-            )) : <h3>No comments for this issue</h3>}
+            {Object.keys(this.props.comments.comments).length > 0 ? (
+              Object.keys(this.props.comments.comments).map((key, i) => (
+                <Comment
+                  {...this.props}
+                  key={i}
+                  i={i}
+                  comment={this.props.comments.comments[key]}
+                />
+              ))
+            ) : (
+              <h3>No comments for this issue</h3>
+            )}
           </tbody>
         </table>
+
+        <div className="comments">
+          <form
+            ref="commentForm"
+            className="comment-form"
+            onSubmit={e => this.handleSubmit(e)}
+          >
+            <input type="text" ref="author" placeholder="author" />
+            <input type="text" ref="comment" placeholder="comment" />
+            <input type="submit" hidden />
+          </form>
+        </div>
       </div>
     );
   }
