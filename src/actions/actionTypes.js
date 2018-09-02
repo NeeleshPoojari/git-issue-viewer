@@ -1,0 +1,7 @@
+export const FETCH_USER = 'FETCH_USER';
+export const FETCHED_USER = 'FETCHED_USER';
+export const FETCHED_COUNT = 'FETCHED_COUNT';
+export const FETCH_COMMENT = 'FETCH_COMMENT';
+export const FETCHED_COMMENT = 'FETCHED_COMMENT';
+export const RECEIVE_ERROR = 'RECEIVE_ERROR';
+

@@ -30,7 +30,7 @@ class IssueList extends Component {
                     this.handleClick(e.target.value);
                   }}
                 >
-                  <option value="all">All</option>
+                  <option value="all">All Open Closed</option>
                   <option value="open">Open</option>
                   <option value="closed">Closed</option>
                 </select>

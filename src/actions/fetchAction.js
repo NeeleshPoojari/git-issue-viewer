@@ -1,41 +1,42 @@
 import store from "../store";
+import * as types from './actionTypes';
 
 export const fetch_post = () => {
   return {
-    type: "FETCH_USER"
+    type: types.FETCH_USER
   };
 };
 
 export const receive_post = post => {
   return {
-    type: "FETCHED_USER",
+    type: types.FETCHED_USER,
     data: post
   };
 };
 
 export const receive_issue_count = count => {
   return {
-    type: "FETCHED_COUNT",
+    type: types.FETCHED_COUNT,
     data: count
   };
 };
 
 export const fetch_comment = () => {
   return {
-    type: "FETCH_COMMENT"
+    type: types.FETCH_COMMENT
   };
 };
 
 export const receive_comment = post => {
   return {
-    type: "FETCHED_COMMENT",
+    type: types.FETCHED_COMMENT,
     data: post
   };
 };
 
 export const receive_error = () => {
   return {
-    type: "RECEIVE_ERROR"
+    type: types.RECEIVE_ERROR
   };
 };
 
