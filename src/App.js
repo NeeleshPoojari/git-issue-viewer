@@ -4,7 +4,7 @@ import IssueList from "./component/IssueList";
 import NoIssue from "./component/NoIssue";
 
 
-import { thunk_action_creator_issues } from "./actions/fetchAction";
+import { thunk_action_creator_issues, thunk_action_creator_issue_count } from "./actions/fetchAction";
 
 class App extends Component {
   handleSubmit = e => {
@@ -18,6 +18,7 @@ class App extends Component {
     };
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
     this.props.dispatch(thunk_action_creator_issues(username, repo));
+    this.props.dispatch(thunk_action_creator_issue_count(username, repo));
     this.getUsername.value = "";
     this.getRepo.value = "";
   };
@@ -66,7 +67,7 @@ class App extends Component {
           <h3 className="error">No such User or Repo exists.</h3>
         ) : null}
         {Object.keys(this.props.data.issues.userData).length > 0 ? (
-          <IssueList user={this.props.data.issues.userData} />
+          <IssueList user={this.props.data.issues.userData} count={this.props.data.issues.issueCount} />
         ) : this.props.data.issues.isFetching ? null : (
           <NoIssue />
         )}

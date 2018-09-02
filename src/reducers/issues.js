@@ -1,5 +1,6 @@
 const initialState = {
     userData: {},
+    issueCount:{},
     isFetching: false,
     isError: false
   };
@@ -18,6 +19,14 @@ const initialState = {
           isFetching: false,
           isError: false
         });
+
+        case "FETCHED_COUNT":
+        return Object.assign({}, state, {
+          issueCount:action.data,
+          isFetching: false,
+          isError: false
+        });
+
       case "RECEIVE_ERROR":
         return Object.assign({}, state, {
           isError: true,

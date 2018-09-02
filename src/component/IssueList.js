@@ -8,7 +8,7 @@ const IssueList = props => {
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Issues 49
+            <th>Open issues {props.count.open_issues}
             </th>
           </tr>
         </thead>
