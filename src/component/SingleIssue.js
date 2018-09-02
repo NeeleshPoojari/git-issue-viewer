@@ -20,7 +20,8 @@ class SingleIssue extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.refs + "Add comment");
+    console.log("Comment stored in local storage");
+
     const author = this.refs.author.value;
     const comment = this.refs.comment.value;
     const { userData } = this.props.issue;
@@ -40,27 +41,26 @@ class SingleIssue extends React.Component {
 
   render() {
     const { userData } = this.props.issue;
-    const { user } = this.props.issue.userData;
     return (
-      <div class="Single-issue-description">
-        <h1 class="issue-title">
+      <div className="Single-issue-description">
+        <h1 className="issue-title">
           {userData.title} <span className="issue-no">#{userData.number}</span>
           &nbsp;
         </h1>
         <div className="activity">
           <span className="issue-status">
             {userData.state}
-            ed on
+            {" "}on
           </span>
           &nbsp;
           <span className="open-on">{userData.created_at} </span>
           <span className="creator">{}</span>
           &nbsp;
         </div>
-        <div class="description alert-success ">
+        <div className="description alert-success ">
           {this.props.issue.userData.body}
         </div>
-        <table class="table table-hover">
+        <table className="table table-hover">
           <thead>
             <tr>
               <th>comments</th>
@@ -76,9 +76,7 @@ class SingleIssue extends React.Component {
                   comment={this.props.comments.comments[key]}
                 />
               ))
-            ) : (
-              <h3>No comments for this issue</h3>
-            )}
+            ) : null}
           </tbody>
         </table>
 

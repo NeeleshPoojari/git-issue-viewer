@@ -13,8 +13,8 @@ class Issue extends React.Component {
               <span className="issue-no">#{issue.number}</span>
               &nbsp;
               <span className="issue-status">
-                {issue.state}
-                ed on
+                {issue.state}{" "}
+                 on
               </span>
               &nbsp;
               <span className="open-on">{issue.created_at} by </span>

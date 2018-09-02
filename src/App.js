@@ -79,7 +79,7 @@ class App extends Component {
           <NoIssue />
         )}
         {Object.keys(this.props.data.issues.userData).length > 0 &&
-        Object.keys(this.props.data.issues.userData).length == 30 ? (
+        Object.keys(this.props.data.issues.userData).length === 30 ? (
           <div className="pagination">
             <button
               className="btn btn-success"
