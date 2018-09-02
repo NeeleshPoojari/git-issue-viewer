@@ -8,8 +8,18 @@ class IssueList extends Component {
     console.log(state);
     var user = JSON.parse(localStorage.getItem("userInfo"));
     let { name, repo, pageNum } = user;
+    user.state = state;
+    localStorage.setItem("userInfo", JSON.stringify(user));
     this.props.dispatch(
       thunk_action_creator_issues(name, repo, pageNum, state)
+    );
+  }
+
+  handleClickForSort(sort) {
+    var user = JSON.parse(localStorage.getItem("userInfo"));
+    let { name, repo, pageNum, state } = user;
+    this.props.dispatch(
+      thunk_action_creator_issues(name, repo, pageNum, state, sort)
     );
   }
   render() {
@@ -25,7 +35,6 @@ class IssueList extends Component {
                 <select
                   id="issueState"
                   name="issueState"
-                  value={this.props.stateFilter}
                   onChange={e => {
                     this.handleClick(e.target.value);
                   }}
@@ -33,6 +42,20 @@ class IssueList extends Component {
                   <option value="all">All Open Closed</option>
                   <option value="open">Open</option>
                   <option value="closed">Closed</option>
+                </select>
+                <select
+                  id="issueSort"
+                  name="issueSort"
+                  onChange={e => {
+                    this.handleClickForSort(e.target.value);
+                  }}
+                >
+                  {" "}
+                  <option>Sort</option>
+                  <option value="created-desc">Newest</option>
+                  <option value="created-asc">Oldest</option>
+                  <option value="comments-desc">Most Commented</option>
+                  <option value="comments-asc">Least Commented</option>
                 </select>
               </th>
             </tr>

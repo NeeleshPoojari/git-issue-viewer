@@ -40,13 +40,13 @@ export const receive_error = () => {
   };
 };
 
-export const thunk_action_creator_issues = (username, repo, pageNumber = 1, state="all") => {
+export const thunk_action_creator_issues = (username, repo, pageNumber = 1, state="all", sort="created-desc") => {
   const user = username.replace(/\s/g, "");
   const rep = repo.replace(/\s/g, "");
   store.dispatch(fetch_post());
   return function(dispatch, getState) {
     return fetch(
-      `https://api.github.com/repos/${user}/${rep}/issues?page=${pageNumber}&state=${state}`
+      `https://api.github.com/repos/${user}/${rep}/issues?page=${pageNumber}&state=${state}&sort=${sort}`
     )
       .then(data => data.json())
       .then(data => {

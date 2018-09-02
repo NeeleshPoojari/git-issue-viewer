@@ -48,10 +48,7 @@ class SingleIssue extends React.Component {
           &nbsp;
         </h1>
         <div className="activity">
-          <span className="issue-status">
-            {userData.state}
-            {" "}on
-          </span>
+          <span className="issue-status">{userData.state} on</span>
           &nbsp;
           <span className="open-on">{userData.created_at} </span>
           <span className="creator">{}</span>
@@ -67,16 +64,16 @@ class SingleIssue extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(this.props.comments.comments).length > 0 ? (
-              Object.keys(this.props.comments.comments).map((key, i) => (
-                <Comment
-                  {...this.props}
-                  key={i}
-                  i={i}
-                  comment={this.props.comments.comments[key]}
-                />
-              ))
-            ) : null}
+            {Object.keys(this.props.comments.comments).length > 0
+              ? Object.keys(this.props.comments.comments).map((key, i) => (
+                  <Comment
+                    {...this.props}
+                    key={i}
+                    i={i}
+                    comment={this.props.comments.comments[key]}
+                  />
+                ))
+              : null}
           </tbody>
         </table>
 

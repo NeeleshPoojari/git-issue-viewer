@@ -16,8 +16,10 @@ class App extends Component {
     let userInfo = {
       name: username,
       repo: repo,
-      pageNum: 1
+      pageNum: 1,
+      state: "all"
     };
+    localStorage.clear();
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
     this.props.dispatch(thunk_action_creator_issues(username, repo));
     this.props.dispatch(thunk_action_creator_issue_count(username, repo));
