@@ -1,4 +1,5 @@
 import React from "react";
+import moment from 'moment';
 
 class Issue extends React.Component {
   render() {
@@ -13,16 +14,14 @@ class Issue extends React.Component {
               <span className="issue-no">#{issue.number}</span>
               &nbsp;
               <span className="issue-status">
-                {issue.state}{" "}
-                 on
+                {issue.state ==='open' ? "opened":issue.state}{" "}
               </span>
-              &nbsp;
-              <span className="open-on">{issue.created_at} by </span>
+              <span className="open-on">{moment(issue.created_at).fromNow()} by </span>
               <span className="creator">{issue.user.login}</span>
               &nbsp;
               <span className="updated-on">
                 {" "}
-                Updated on {issue.updated_at}{" "}
+                Updated {moment(issue.updated_at).fromNow()}{" "}
               </span>
               &nbsp;
               <span className="fa fa-comment-o comments">

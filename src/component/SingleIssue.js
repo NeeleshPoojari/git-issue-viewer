@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import moment from 'moment';
 import {
   thunk_action_creator_specific_issue,
   thunk_action_creator_comment
@@ -48,9 +49,9 @@ class SingleIssue extends React.Component {
           &nbsp;
         </h1>
         <div className="activity">
-          <span className="issue-status">{userData.state} on</span>
+          <span className="issue-status">{userData.state==="open" ? "opened":userData.state}</span>
           &nbsp;
-          <span className="open-on">{userData.created_at} </span>
+          <span className="open-on">{moment(userData.created_at).fromNow()} </span>
           <span className="creator">{}</span>
           &nbsp;
         </div>
