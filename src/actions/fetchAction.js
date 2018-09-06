@@ -1,5 +1,6 @@
 import store from "../store";
-import * as types from './actionTypes';
+import * as types from "./actionTypes";
+import * as constants from "../constant.js"
 
 export const fetch_post = () => {
   return {
@@ -27,12 +28,17 @@ export const fetch_comment = () => {
   };
 };
 
-export const receive_comment = post => {
+export const receive_comment = comments => {
   return {
     type: types.FETCHED_COMMENT,
-    data: post
+    data: comments
   };
 };
+
+export const thunk_action_creator_set_comment = comments => ({
+  type: types.SET_ISSUE_COMMENT,
+  payload: comments
+});
 
 export const receive_error = () => {
   return {
@@ -40,13 +46,19 @@ export const receive_error = () => {
   };
 };
 
-export const thunk_action_creator_issues = (username, repo, pageNumber = 1, state="all", sort="created-desc") => {
+export const thunk_action_creator_issues = (
+  username,
+  repo,
+  pageNumber = 1,
+  state = "all",
+  sort = "created-desc"
+) => {
   const user = username.replace(/\s/g, "");
   const rep = repo.replace(/\s/g, "");
   store.dispatch(fetch_post());
-  return function(dispatch, getState) {
+  return dispatch => {
     return fetch(
-      `https://api.github.com/repos/${user}/${rep}/issues?page=${pageNumber}&state=${state}&sort=${sort}`
+      `${constants.gitUrl}/${user}/${rep}/issues?page=${pageNumber}&state=${state}&sort=${sort}`
     )
       .then(data => data.json())
       .then(data => {
@@ -65,9 +77,9 @@ export const thunk_action_creator_specific_issue = (
   const user = username.replace(/\s/g, "");
   const rep = repo.replace(/\s/g, "");
   store.dispatch(fetch_post());
-  return function(dispatch, getState) {
+  return dispatch => {
     return fetch(
-      `https://api.github.com/repos/${user}/${rep}/issues/${issueId}`
+      `${constants.gitUrl}/${user}/${rep}/issues/${issueId}`
     )
       .then(data => data.json())
       .then(data => {
@@ -83,12 +95,12 @@ export const thunk_action_creator_issue_count = (username, repo) => {
   const user = username.replace(/\s/g, "");
   const rep = repo.replace(/\s/g, "");
   store.dispatch(fetch_post());
-  return function(dispatch, getState) {
-    return fetch(`https://api.github.com/repos/${user}/${rep}`)
+  return dispatch => {
+    return fetch(`${constants.gitUrl}/${user}/${rep}`)
       .then(data => data.json())
       .then(data => {
         if (data.message === "Not Found") {
-          throw new Error("No such user found!!");
+          throw new Error("Issue while fetching count");
         } else dispatch(receive_issue_count(data));
       })
       .catch(err => dispatch(receive_error()));
@@ -99,15 +111,23 @@ export const thunk_action_creator_comment = (username, repo, issueId) => {
   const user = username.replace(/\s/g, "");
   const rep = repo.replace(/\s/g, "");
   store.dispatch(fetch_comment());
-  return function(dispatch, getState) {
+  return dispatch => {
     return fetch(
-      `https://api.github.com/repos/${user}/${rep}/issues/${issueId}/comments`
+      `${constants.gitUrl}/${user}/${rep}/issues/${issueId}/comments`
     )
       .then(data => data.json())
       .then(data => {
         if (data.message === "Not Found") {
-          throw new Error("No such user found!!");
-        } else dispatch(receive_comment(data));
+          throw new Error("No comments");
+        } else {
+          const localComment = JSON.parse(
+            localStorage.getItem(`/${username}/${repo}/issue/${issueId}`)
+          );
+          if (localComment && localComment.length) {
+            data = [...data, ...localComment];
+          }
+          dispatch(receive_comment(data));
+        }
       })
       .catch(err => dispatch(receive_error()));
   };

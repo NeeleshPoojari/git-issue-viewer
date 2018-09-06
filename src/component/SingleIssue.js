@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import moment from 'moment';
+import moment from "moment";
 import {
   thunk_action_creator_specific_issue,
-  thunk_action_creator_comment
+  thunk_action_creator_comment,
+  thunk_action_creator_set_comment
 } from "../actions/fetchAction";
 import Comment from "./Comment";
 
@@ -21,22 +22,27 @@ class SingleIssue extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log("Comment stored in local storage");
-
-    const author = this.refs.author.value;
+    var userData = JSON.parse(localStorage.getItem("userInfo"));
+    let { name, repo } = userData;
     const comment = this.refs.comment.value;
-    const { userData } = this.props.issue;
-
-    var newComment = {
-      issueId: userData.number,
-      author,
-      comment
+    let storedComments =
+      JSON.parse(
+        localStorage.getItem(`/${name}/${repo}${this.props.location.pathname}`)
+      ) || [];
+    let newComment = {
+      user: {
+        login: name,
+        avatar_url: "https://avatars2.githubusercontent.com/u/28433939?v=4"
+      },
+      created_at: Date(),
+      body: comment
     };
+    storedComments.push(newComment);
     localStorage.setItem(
-      `newComment${userData.number + Math.random()}`,
-      JSON.stringify(newComment)
+      `/${name}/${repo}${this.props.location.pathname}`,
+      JSON.stringify(storedComments)
     );
-
+    this.props.dispatch(thunk_action_creator_set_comment(newComment));
     this.refs.commentForm.reset();
   }
 
@@ -44,14 +50,18 @@ class SingleIssue extends React.Component {
     const { userData } = this.props.issue;
     return (
       <div className="Single-issue-description">
-        <h1 className="issue-title">
+        <h2 className="issue-title">
           {userData.title} <span className="issue-no">#{userData.number}</span>
           &nbsp;
-        </h1>
+        </h2>
         <div className="activity">
-          <span className="issue-status">{userData.state==="open" ? "opened":userData.state}</span>
+          <span className="issue-status">
+            {userData.state === "open" ? "opened" : userData.state}
+          </span>
           &nbsp;
-          <span className="open-on">{moment(userData.created_at).fromNow()} </span>
+          <span className="open-on">
+            {moment(userData.created_at).fromNow()}{" "}
+          </span>
           <span className="creator">{}</span>
           &nbsp;
         </div>
@@ -65,14 +75,9 @@ class SingleIssue extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(this.props.comments.comments).length > 0
-              ? Object.keys(this.props.comments.comments).map((key, i) => (
-                  <Comment
-                    {...this.props}
-                    key={i}
-                    i={i}
-                    comment={this.props.comments.comments[key]}
-                  />
+            {this.props.comments.length > 0
+              ? this.props.comments.map((comment, i) => (
+                  <Comment {...this.props} key={i} i={i} comment={comment} />
                 ))
               : null}
           </tbody>
@@ -81,12 +86,11 @@ class SingleIssue extends React.Component {
         <div className="comments">
           <form
             ref="commentForm"
-            className="comment-form"
+            className="comment-form "
             onSubmit={e => this.handleSubmit(e)}
           >
-            <input type="text" ref="author" placeholder="author" />
-            <input type="text" ref="comment" placeholder="comment" />
-            <input type="submit" hidden />
+            <textarea type="text" ref="comment" class="form-control" rows="3" placeholder="comment" />
+            <input className="btn btn-success  comment-btn" type="submit" value="Add comment" />
           </form>
         </div>
       </div>

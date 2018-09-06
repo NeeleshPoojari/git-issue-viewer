@@ -1,5 +1,5 @@
 import React from "react";
-import moment from 'moment';
+import moment from "moment";
 
 class Issue extends React.Component {
   render() {
@@ -14,9 +14,11 @@ class Issue extends React.Component {
               <span className="issue-no">#{issue.number}</span>
               &nbsp;
               <span className="issue-status">
-                {issue.state ==='open' ? "opened":issue.state}{" "}
+                {issue.state === "open" ? "opened" : issue.state}{" "}
               </span>
-              <span className="open-on">{moment(issue.created_at).fromNow()} by </span>
+              <span className="open-on">
+                {moment(issue.created_at).fromNow()} by{" "}
+              </span>
               <span className="creator">{issue.user.login}</span>
               &nbsp;
               <span className="updated-on">

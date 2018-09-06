@@ -1,28 +1,16 @@
-const initialState = {
-  comments: {},
-  isFetching: false,
-  isError: false
-};
+import * as types from "../actions/actionTypes";
 
-const comments = (state = initialState, action) => {
+const comments = (state = [], action) => {
   switch (action.type) {
-    case "FETCH_COMMENT":
-      return Object.assign({}, state, {
-        isFetching: true,
-        comments: {},
-        isError: false
-      });
-    case "FETCHED_COMMENT":
-      return Object.assign({}, state, {
-        comments: action.data,
-        isFetching: false,
-        isError: false
-      });
-    case "RECEIVE_ERROR":
-      return Object.assign({}, state, {
-        isError: true,
-        isFetching: false
-      });
+    case types.FETCH_COMMENT:
+      return true;
+
+    case types.FETCHED_COMMENT:
+      return action.data;
+
+    case types.SET_ISSUE_COMMENT:
+      return [...state, action.payload];
+
     default:
       return state;
   }
